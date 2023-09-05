@@ -1,0 +1,16 @@
+theia@theia-schae016:/home/project$ cd /home/project
+theia@theia-schae016:/home/project$ ls
+theia@theia-schae016:/home/project$ nano hello_world.txt
+theia@theia-schae016:/home/project$ cat hello_world.txt
+Hello World !
+This is the second line
+theia@theia-schae016:/home/project$ vim
+theia@theia-schae016:/home/project$ vim hello_world2.txt
+theia@theia-schae016:/home/project$ nano hello_world.txt
+theia@theia-schae016:/home/project$ cat hello_world.txt
+Hello World !
+This is the second line
+This is the third line
+theia@theia-schae016:/home/project$ vim done.txt
+theia@theia-schae016:/home/project$ bash done.txt
+I am done with the lab
