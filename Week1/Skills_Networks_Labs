@@ -1,0 +1,38 @@
+theia@theia-schae016:/home/project$ ls /
+bin   dev  home  lib32  libx32  mnt  proc  run   srv  tmp  var
+boot  etc  lib   lib64  media   opt  root  sbin  sys  usr
+theia@theia-schae016:/home/project$ ls /bin
+bash          dd             lessfile       ps          uname
+bunzip2       df             lesskey        pwd         uncompress
+bzcat         dir            lesspipe       rbash       vdir
+bzcmp         dmesg          ln             readlink    wdctl
+bzdiff        dnsdomainname  login          rm          which
+bzegrep       domainname     ls             rmdir       ypdomainname
+bzexe         echo           lsblk          rnano       zcat
+bzfgrep       egrep          mkdir          run-parts   zcmp
+bzgrep        false          mknod          sed         zdiff
+bzip2         fgrep          mktemp         sh          zegrep
+bzip2recover  findmnt        more           sh.distrib  zfgrep
+bzless        fuser          mount          sleep       zforce
+bzmore        grep           mountpoint     stty        zgrep
+cat           gunzip         mv             su          zless
+chgrp         gzexe          nano           sync        zmore
+chmod         gzip           netstat        tar         znew
+chown         hostname       nisdomainname  tempfile
+cp            kill           pidof          touch
+dash          less           ping           true
+date          lessecho       ping6          umount
+theia@theia-schae016:/home/project$ cd ~
+theia@theia-schae016:~$ pwd
+/home/theia
+theia@theia-schae016:~$ cd ..
+theia@theia-schae016:/home$ cd /
+theia@theia-schae016:/$ cd ./bin
+theia@theia-schae016:/bin$ .
+bash: .: filename argument required
+.: usage: . filename [arguments]
+theia@theia-schae016:/bin$ cd .
+theia@theia-schae016:/bin$ cd ../home/theia
+theia@theia-schae016:~$ cd ../project
+theia@theia-schae016:/home/project$ cd ./bin
+bash: cd: ./bin: No such file or directory
