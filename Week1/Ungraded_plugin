@@ -1,0 +1,32 @@
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.10.16.3-microsoft-standard-WSL2 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+This message is shown once a day. To disable it please create the
+/home/meredith/.hushlogin file.
+meredith@MEREDITH:~$ pwd
+/home/meredith
+meredith@MEREDITH:~$ ls /home
+meredith
+meredith@MEREDITH:~$ ls /
+bin   etc   lib    libx32      mnt   root  snap  tmp
+boot  home  lib32  lost+found  opt   run   srv   usr
+dev   init  lib64  media       proc  sbin  sys   var
+meredith@MEREDITH:~$ ~
+-bash: /home/meredith: Is a directory
+meredith@MEREDITH:~$ mkdir Docs
+meredith@MEREDITH:~$ cd Docs
+meredith@MEREDITH:/$ ls /home
+meredith
+meredith@MEREDITH:/$ cd meredith
+-bash: cd: meredith: No such file or directory
+meredith@MEREDITH:/$ cd /home/meredith
+meredith@MEREDITH:~$ mkdir Hanh
+meredith@MEREDITH:~$ touch python.txt
+meredith@MEREDITH:~$ echo "This is a new file" > python.txt
+meredith@MEREDITH:~$ cat python.txt
+This is a new file
+meredith@MEREDITH:~$ cat python.txt
+This is a new file
