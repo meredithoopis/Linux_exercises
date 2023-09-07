@@ -1,0 +1,519 @@
+theia@theia-schae016:/home/project$ tar -cvf bin.tar /bin
+tar: Removing leading `/' from member names
+/bin/
+/bin/zdiff
+/bin/su
+/bin/more
+/bin/mountpoint
+/bin/uname
+/bin/uncompress
+/bin/which
+/bin/gzip
+/bin/domainname
+/bin/run-parts
+/bin/mknod
+/bin/znew
+/bin/dmesg
+/bin/wdctl
+/bin/bzexe
+/bin/bzegrep
+/bin/kill
+/bin/false
+/bin/echo
+/bin/rbash
+/bin/bzcmp
+/bin/bunzip2
+/bin/zcmp
+/bin/stty
+/bin/ypdomainname
+/bin/bzless
+tar: Removing leading `/' from hard link targets
+/bin/bzip2
+/bin/mktemp
+/bin/cp
+/bin/tar
+/bin/readlink
+/bin/nisdomainname
+/bin/dnsdomainname
+/bin/ls
+/bin/login
+/bin/zcat
+/bin/egrep
+/bin/umount
+/bin/bash
+/bin/sh.distrib
+/bin/tempfile
+/bin/bzcat
+/bin/dash
+/bin/ps
+/bin/bzfgrep
+/bin/chmod
+/bin/zgrep
+/bin/findmnt
+/bin/gunzip
+/bin/pwd
+/bin/bzip2recover
+/bin/zmore
+/bin/pidof
+/bin/lsblk
+/bin/gzexe
+/bin/vdir
+/bin/dir
+/bin/bzdiff
+/bin/bzgrep
+/bin/chgrp
+/bin/zfgrep
+/bin/cat
+/bin/sleep
+/bin/sed
+/bin/fgrep
+/bin/mount
+/bin/chown
+/bin/hostname
+/bin/bzmore
+/bin/sh
+/bin/mv
+/bin/date
+/bin/ln
+/bin/rmdir
+/bin/true
+/bin/zless
+/bin/df
+/bin/zegrep
+/bin/zforce
+/bin/mkdir
+/bin/sync
+/bin/touch
+/bin/grep
+/bin/rm
+/bin/dd
+/bin/ping6
+/bin/ping
+/bin/rnano
+/bin/netstat
+/bin/nano
+/bin/fuser
+/bin/lesspipe
+/bin/less
+/bin/lesskey
+/bin/lessfile
+/bin/lessecho
+theia@theia-schae016:/home/project$ tar -tvf bin.tar
+drwxr-xr-x root/root         0 2023-02-27 12:29 bin/
+-rwxr-xr-x root/root      5782 2022-04-08 07:12 bin/zdiff
+-rwsr-xr-x root/root     44664 2022-11-29 07:25 bin/su
+-rwxr-xr-x root/root     38952 2020-09-16 14:43 bin/more
+-rwxr-xr-x root/root     14408 2020-09-16 14:43 bin/mountpoint
+-rwxr-xr-x root/root     35032 2018-01-18 04:43 bin/uname
+-rwxr-xr-x root/root      2301 2022-04-08 07:12 bin/uncompress
+-rwxr-xr-x root/root       946 2017-12-30 13:15 bin/which
+-rwxr-xr-x root/root    101560 2022-04-08 07:12 bin/gzip
+lrwxrwxrwx root/root         0 2018-01-31 07:08 bin/domainname -> hostname
+-rwxr-xr-x root/root     18760 2017-12-30 13:15 bin/run-parts
+-rwxr-xr-x root/root     67768 2018-01-18 04:43 bin/mknod
+-rwxr-xr-x root/root      5071 2022-04-08 07:12 bin/znew
+-rwxr-xr-x root/root     72000 2020-09-16 14:43 bin/dmesg
+-rwxr-xr-x root/root     30800 2020-09-16 14:43 bin/wdctl
+-rwxr-xr-x root/root      4877 2019-07-04 08:35 bin/bzexe
+lrwxrwxrwx root/root         0 2019-07-04 08:35 bin/bzegrep -> bzgrep
+-rwxr-xr-x root/root     26704 2019-08-09 11:37 bin/kill
+-rwxr-xr-x root/root     30904 2018-01-18 04:43 bin/false
+-rwxr-xr-x root/root     35000 2018-01-18 04:43 bin/echo
+lrwxrwxrwx root/root         0 2022-04-18 11:08 bin/rbash -> bash
+lrwxrwxrwx root/root         0 2019-07-04 08:35 bin/bzcmp -> bzdiff
+-rwxr-xr-x root/root     34888 2019-07-04 08:35 bin/bunzip2
+-rwxr-xr-x root/root      1777 2022-04-08 07:12 bin/zcmp
+-rwxr-xr-x root/root     75992 2018-01-18 04:43 bin/stty
+lrwxrwxrwx root/root         0 2018-01-31 07:08 bin/ypdomainname -> hostname
+lrwxrwxrwx root/root         0 2019-07-04 08:35 bin/bzless -> bzmore
+hrwxr-xr-x root/root         0 2019-07-04 08:35 bin/bzip2 link to bin/bunzip2
+-rwxr-xr-x root/root     43192 2018-01-18 04:43 bin/mktemp
+-rwxr-xr-x root/root    141528 2018-01-18 04:43 bin/cp
+-rwxr-xr-x root/root    423312 2022-03-15 08:58 bin/tar
+-rwxr-xr-x root/root     43192 2018-01-18 04:43 bin/readlink
+lrwxrwxrwx root/root         0 2018-01-31 07:08 bin/nisdomainname -> hostname
+lrwxrwxrwx root/root         0 2018-01-31 07:08 bin/dnsdomainname -> hostname
+-rwxr-xr-x root/root    133792 2018-01-18 04:43 bin/ls
+-rwxr-xr-x root/root     52664 2022-11-29 07:25 bin/login
+-rwxr-xr-x root/root      1937 2022-04-08 07:12 bin/zcat
+-rwxr-xr-x root/root        28 2019-09-18 11:00 bin/egrep
+-rwsr-xr-x root/root     26696 2020-09-16 14:43 bin/umount
+-rwxr-xr-x root/root   1113504 2022-04-18 11:08 bin/bash
+lrwxrwxrwx root/root         0 2023-01-26 03:31 bin/sh.distrib -> dash
+-rwxr-xr-x root/root     10104 2017-12-30 13:15 bin/tempfile
+hrwxr-xr-x root/root         0 2019-07-04 08:35 bin/bzcat link to bin/bunzip2
+-rwxr-xr-x root/root    121432 2018-01-25 02:14 bin/dash
+-rwxr-xr-x root/root    133432 2019-08-09 11:37 bin/ps
+lrwxrwxrwx root/root         0 2019-07-04 08:35 bin/bzfgrep -> bzgrep
+-rwxr-xr-x root/root     59608 2018-01-18 04:43 bin/chmod
+-rwxr-xr-x root/root      6456 2022-04-08 07:12 bin/zgrep
+-rwxr-xr-x root/root     64784 2020-09-16 14:43 bin/findmnt
+hrwxr-xr-x root/root         0 2022-04-08 07:12 bin/gunzip link to bin/uncompress
+-rwxr-xr-x root/root     35000 2018-01-18 04:43 bin/pwd
+-rwxr-xr-x root/root     14328 2019-07-04 08:35 bin/bzip2recover
+-rwxr-xr-x root/root      1910 2022-04-08 07:12 bin/zmore
+lrwxrwxrwx root/root         0 2017-11-01 17:00 bin/pidof -> /sbin/killall5
+-rwxr-xr-x root/root     84048 2020-09-16 14:43 bin/lsblk
+-rwxr-xr-x root/root      5998 2022-04-08 07:12 bin/gzexe
+-rwxr-xr-x root/root    133792 2018-01-18 04:43 bin/vdir
+-rwxr-xr-x root/root    133792 2018-01-18 04:43 bin/dir
+-rwxr-xr-x root/root      2140 2019-07-04 08:35 bin/bzdiff
+-rwxr-xr-x root/root      3642 2019-07-04 08:35 bin/bzgrep
+-rwxr-xr-x root/root     63672 2018-01-18 04:43 bin/chgrp
+-rwxr-xr-x root/root       140 2022-04-08 07:12 bin/zfgrep
+-rwxr-xr-x root/root     35064 2018-01-18 04:43 bin/cat
+-rwxr-xr-x root/root     35000 2018-01-18 04:43 bin/sleep
+-rwxr-xr-x root/root    109000 2018-01-29 21:49 bin/sed
+-rwxr-xr-x root/root        28 2019-09-18 11:00 bin/fgrep
+-rwsr-xr-x root/root     43088 2020-09-16 14:43 bin/mount
+-rwxr-xr-x root/root     67768 2018-01-18 04:43 bin/chown
+-rwxr-xr-x root/root     18504 2018-01-31 07:08 bin/hostname
+-rwxr-xr-x root/root      1297 2019-07-04 08:35 bin/bzmore
+lrwxrwxrwx root/root         0 2023-01-26 03:31 bin/sh -> dash
+-rwxr-xr-x root/root    137440 2018-01-18 04:43 bin/mv
+-rwxr-xr-x root/root    100568 2018-01-18 04:43 bin/date
+-rwxr-xr-x root/root     67808 2018-01-18 04:43 bin/ln
+-rwxr-xr-x root/root     43192 2018-01-18 04:43 bin/rmdir
+-rwxr-xr-x root/root     30904 2018-01-18 04:43 bin/true
+-rwxr-xr-x root/root      2037 2022-04-08 07:12 bin/zless
+-rwxr-xr-x root/root     84776 2018-01-18 04:43 bin/df
+-rwxr-xr-x root/root       140 2022-04-08 07:12 bin/zegrep
+-rwxr-xr-x root/root      2131 2022-04-08 07:12 bin/zforce
+-rwxr-xr-x root/root     80056 2018-01-18 04:43 bin/mkdir
+-rwxr-xr-x root/root     35000 2018-01-18 04:43 bin/sync
+-rwxr-xr-x root/root     88280 2018-01-18 04:43 bin/touch
+-rwxr-xr-x root/root    219456 2019-09-18 11:00 bin/grep
+-rwxr-xr-x root/root     63704 2018-01-18 04:43 bin/rm
+-rwxr-xr-x root/root     76000 2018-01-18 04:43 bin/dd
+-rwsr-xr-x root/root     64888 2021-08-16 09:37 bin/ping6
+-rwsr-xr-x root/root     74072 2021-08-16 09:37 bin/ping
+lrwxrwxrwx root/root         0 2018-03-06 09:46 bin/rnano -> nano
+-rwxr-xr-x root/root    154192 2017-01-09 23:25 bin/netstat
+-rwxr-xr-x root/root    245872 2018-03-06 09:46 bin/nano
+-rwxr-xr-x root/root     35928 2018-12-11 10:46 bin/fuser
+-rwxr-xr-x root/root      8564 2017-11-30 23:11 bin/lesspipe
+-rwxr-xr-x root/root    170760 2017-11-30 23:11 bin/less
+-rwxr-xr-x root/root     19856 2017-11-30 23:11 bin/lesskey
+lrwxrwxrwx root/root         0 2017-11-30 23:11 bin/lessfile -> lesspipe
+-rwxr-xr-x root/root     10256 2017-11-30 23:11 bin/lessecho
+theia@theia-schae016:/home/project$ tar -xvf bin.tar
+bin/
+bin/zdiff
+bin/su
+bin/more
+bin/mountpoint
+bin/uname
+bin/uncompress
+bin/which
+bin/gzip
+bin/domainname
+bin/run-parts
+bin/mknod
+bin/znew
+bin/dmesg
+bin/wdctl
+bin/bzexe
+bin/bzegrep
+bin/kill
+bin/false
+bin/echo
+bin/rbash
+bin/bzcmp
+bin/bunzip2
+bin/zcmp
+bin/stty
+bin/ypdomainname
+bin/bzless
+bin/bzip2
+bin/mktemp
+bin/cp
+bin/tar
+bin/readlink
+bin/nisdomainname
+bin/dnsdomainname
+bin/ls
+bin/login
+bin/zcat
+bin/egrep
+bin/umount
+bin/bash
+bin/sh.distrib
+bin/tempfile
+bin/bzcat
+bin/dash
+bin/ps
+bin/bzfgrep
+bin/chmod
+bin/zgrep
+bin/findmnt
+bin/gunzip
+bin/pwd
+bin/bzip2recover
+bin/zmore
+bin/pidof
+bin/lsblk
+bin/gzexe
+bin/vdir
+bin/dir
+bin/bzdiff
+bin/bzgrep
+bin/chgrp
+bin/zfgrep
+bin/cat
+bin/sleep
+bin/sed
+bin/fgrep
+bin/mount
+bin/chown
+bin/hostname
+bin/bzmore
+bin/sh
+bin/mv
+bin/date
+bin/ln
+bin/rmdir
+bin/true
+bin/zless
+bin/df
+bin/zegrep
+bin/zforce
+bin/mkdir
+bin/sync
+bin/touch
+bin/grep
+bin/rm
+bin/dd
+bin/ping6
+bin/ping
+bin/rnano
+bin/netstat
+bin/nano
+bin/fuser
+bin/lesspipe
+bin/less
+bin/lesskey
+bin/lessfile
+bin/lessecho
+theia@theia-schae016:/home/project$ ls -l
+total 5604
+drwxr-sr-x 2 theia users    4096 Feb 27  2023 bin
+-rw-r--r-- 1 theia users 5703680 Sep  7 04:06 bin.tar
+-rw-r--r-- 1 theia users   18623 Sep  7 03:56 index.html
+-rw-r--r-- 1 theia users    8121 Sep 21  2022 usdoi.txt
+theia@theia-schae016:/home/project$ zip config.zip /etc/*.conf
+  adding: etc/adduser.conf (deflated 55%)
+  adding: etc/ca-certificates.conf (deflated 74%)
+  adding: etc/debconf.conf (deflated 56%)
+  adding: etc/deluser.conf (deflated 40%)
+  adding: etc/gai.conf (deflated 57%)
+  adding: etc/host.conf (deflated 13%)
+  adding: etc/ld.so.conf (deflated 6%)
+  adding: etc/libaudit.conf (deflated 34%)
+  adding: etc/logrotate.conf (deflated 50%)
+  adding: etc/mke2fs.conf (deflated 58%)
+  adding: etc/mongodb.conf (deflated 52%)
+  adding: etc/nsswitch.conf (deflated 49%)
+  adding: etc/ntp.conf (deflated 52%)
+  adding: etc/pam.conf (deflated 62%)
+  adding: etc/resolv.conf (deflated 27%)
+  adding: etc/sensors3.conf (deflated 82%)
+  adding: etc/sysctl.conf (deflated 61%)
+  adding: etc/ucf.conf (deflated 61%)
+theia@theia-schae016:/home/project$ zip -r bin.zip /bin
+  adding: bin/ (stored 0%)
+  adding: bin/zdiff (deflated 66%)
+  adding: bin/su (deflated 61%)
+  adding: bin/more (deflated 52%)
+  adding: bin/mountpoint (deflated 68%)
+  adding: bin/uname (deflated 58%)
+  adding: bin/uncompress (deflated 50%)
+  adding: bin/which (deflated 51%)
+  adding: bin/gzip (deflated 48%)
+  adding: bin/domainname (deflated 67%)
+  adding: bin/run-parts (deflated 58%)
+  adding: bin/mknod (deflated 53%)
+  adding: bin/znew (deflated 59%)
+  adding: bin/dmesg (deflated 60%)
+  adding: bin/wdctl (deflated 55%)
+  adding: bin/bzexe (deflated 59%)
+  adding: bin/bzegrep (deflated 56%)
+  adding: bin/kill (deflated 61%)
+  adding: bin/false (deflated 57%)
+  adding: bin/echo (deflated 58%)
+  adding: bin/rbash (deflated 52%)
+  adding: bin/bzcmp (deflated 58%)
+  adding: bin/bunzip2 (deflated 56%)
+  adding: bin/zcmp (deflated 49%)
+  adding: bin/stty (deflated 58%)
+  adding: bin/ypdomainname (deflated 67%)
+  adding: bin/bzless (deflated 50%)
+  adding: bin/bzip2 (deflated 56%)
+  adding: bin/mktemp (deflated 56%)
+  adding: bin/cp (deflated 53%)
+  adding: bin/tar (deflated 53%)
+  adding: bin/readlink (deflated 54%)
+  adding: bin/nisdomainname (deflated 67%)
+  adding: bin/dnsdomainname (deflated 67%)
+  adding: bin/ls (deflated 54%)
+  adding: bin/login (deflated 58%)
+  adding: bin/zcat (deflated 49%)
+  adding: bin/egrep (stored 0%)
+  adding: bin/umount (deflated 60%)
+  adding: bin/bash (deflated 52%)
+  adding: bin/sh.distrib (deflated 51%)
+  adding: bin/tempfile (deflated 66%)
+  adding: bin/bzcat (deflated 56%)
+  adding: bin/dash (deflated 51%)
+  adding: bin/ps (deflated 65%)
+  adding: bin/bzfgrep (deflated 56%)
+  adding: bin/chmod (deflated 52%)
+  adding: bin/zgrep (deflated 61%)
+  adding: bin/findmnt (deflated 59%)
+  adding: bin/gunzip (deflated 50%)
+  adding: bin/pwd (deflated 56%)
+  adding: bin/bzip2recover (deflated 64%)
+  adding: bin/zmore (deflated 49%)
+  adding: bin/pidof (deflated 61%)
+  adding: bin/lsblk (deflated 58%)
+  adding: bin/gzexe (deflated 61%)
+  adding: bin/vdir (deflated 54%)
+  adding: bin/dir (deflated 54%)
+  adding: bin/bzdiff (deflated 58%)
+  adding: bin/bzgrep (deflated 56%)
+  adding: bin/chgrp (deflated 53%)
+  adding: bin/zfgrep (deflated 27%)
+  adding: bin/cat (deflated 54%)
+  adding: bin/sleep (deflated 58%)
+  adding: bin/sed (deflated 51%)
+  adding: bin/fgrep (stored 0%)
+  adding: bin/mount (deflated 59%)
+  adding: bin/chown (deflated 54%)
+  adding: bin/hostname (deflated 67%)
+  adding: bin/bzmore (deflated 50%)
+  adding: bin/sh (deflated 51%)
+  adding: bin/mv (deflated 52%)
+  adding: bin/date (deflated 52%)
+  adding: bin/ln (deflated 54%)
+  adding: bin/rmdir (deflated 55%)
+  adding: bin/true (deflated 57%)
+  adding: bin/zless (deflated 47%)
+  adding: bin/df (deflated 51%)
+  adding: bin/zegrep (deflated 27%)
+  adding: bin/zforce (deflated 48%)
+  adding: bin/mkdir (deflated 52%)
+  adding: bin/sync (deflated 59%)
+  adding: bin/touch (deflated 52%)
+  adding: bin/grep (deflated 53%)
+  adding: bin/rm (deflated 52%)
+  adding: bin/dd (deflated 53%)
+  adding: bin/ping6 (deflated 50%)
+  adding: bin/ping (deflated 50%)
+  adding: bin/rnano (deflated 51%)
+  adding: bin/netstat (deflated 61%)
+  adding: bin/nano (deflated 51%)
+  adding: bin/fuser (deflated 57%)
+  adding: bin/lesspipe (deflated 68%)
+  adding: bin/less (deflated 54%)
+  adding: bin/lesskey (deflated 64%)
+  adding: bin/lessfile (deflated 68%)
+  adding: bin/lessecho (deflated 68%)
+theia@theia-schae016:/home/project$ upzip -l config.zip
+bash: upzip: command not found
+theia@theia-schae016:/home/project$ unzip -o bin.zip
+Archive:  bin.zip
+  inflating: bin/zdiff               
+  inflating: bin/su                  
+  inflating: bin/more                
+  inflating: bin/mountpoint          
+  inflating: bin/uname               
+  inflating: bin/uncompress          
+  inflating: bin/which               
+  inflating: bin/gzip                
+  inflating: bin/domainname          
+  inflating: bin/run-parts           
+  inflating: bin/mknod               
+  inflating: bin/znew                
+  inflating: bin/dmesg               
+  inflating: bin/wdctl               
+  inflating: bin/bzexe               
+  inflating: bin/bzegrep             
+  inflating: bin/kill                
+  inflating: bin/false               
+  inflating: bin/echo                
+  inflating: bin/rbash               
+  inflating: bin/bzcmp               
+  inflating: bin/bunzip2             
+  inflating: bin/zcmp                
+  inflating: bin/stty                
+  inflating: bin/ypdomainname        
+  inflating: bin/bzless              
+  inflating: bin/bzip2               
+  inflating: bin/mktemp              
+  inflating: bin/cp                  
+  inflating: bin/tar                 
+  inflating: bin/readlink            
+  inflating: bin/nisdomainname       
+  inflating: bin/dnsdomainname       
+  inflating: bin/ls                  
+  inflating: bin/login               
+  inflating: bin/zcat                
+ extracting: bin/egrep               
+  inflating: bin/umount              
+  inflating: bin/bash                
+  inflating: bin/sh.distrib          
+  inflating: bin/tempfile            
+  inflating: bin/bzcat               
+  inflating: bin/dash                
+  inflating: bin/ps                  
+  inflating: bin/bzfgrep             
+  inflating: bin/chmod               
+  inflating: bin/zgrep               
+  inflating: bin/findmnt             
+  inflating: bin/gunzip              
+  inflating: bin/pwd                 
+  inflating: bin/bzip2recover        
+  inflating: bin/zmore               
+  inflating: bin/pidof               
+  inflating: bin/lsblk               
+  inflating: bin/gzexe               
+  inflating: bin/vdir                
+  inflating: bin/dir                 
+  inflating: bin/bzdiff              
+  inflating: bin/bzgrep              
+  inflating: bin/chgrp               
+  inflating: bin/zfgrep              
+  inflating: bin/cat                 
+  inflating: bin/sleep               
+  inflating: bin/sed                 
+ extracting: bin/fgrep               
+  inflating: bin/mount               
+  inflating: bin/chown               
+  inflating: bin/hostname            
+  inflating: bin/bzmore              
+  inflating: bin/sh                  
+  inflating: bin/mv                  
+  inflating: bin/date                
+  inflating: bin/ln                  
+  inflating: bin/rmdir               
+  inflating: bin/true                
+  inflating: bin/zless               
+  inflating: bin/df                  
+  inflating: bin/zegrep              
+  inflating: bin/zforce              
+  inflating: bin/mkdir               
+  inflating: bin/sync                
+  inflating: bin/touch               
+  inflating: bin/grep                
+  inflating: bin/rm                  
+  inflating: bin/dd                  
+  inflating: bin/ping6               
+  inflating: bin/ping                
+  inflating: bin/rnano               
+  inflating: bin/netstat             
+  inflating: bin/nano                
+  inflating: bin/fuser               
+  inflating: bin/lesspipe            
+  inflating: bin/less                
+  inflating: bin/lesskey             
+  inflating: bin/lessfile            
+  inflating: bin/lessecho 
