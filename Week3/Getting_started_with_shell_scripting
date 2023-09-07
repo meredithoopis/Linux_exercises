@@ -1,0 +1,22 @@
+theia@theia-schae016:/home/project$ ls -l greet.sh
+-rw-r--r-- 1 theia users 110 Sep  7 04:33 greet.sh
+theia@theia-schae016:/home/project$ bash greet.sh
+Enter your name:Hanh
+Welcome Hanh
+My first scriptUsing Bash is fun
+theia@theia-schae016:/home/project$ which bash 
+/bin/bash
+theia@theia-schae016:/home/project$ chmod +x greet.sh
+theia@theia-schae016:/home/project$ chmod -x greet.sh
+theia@theia-schae016:/home/project$ chmod u+x greet.sh
+theia@theia-schae016:/home/project$ ls -l greet.sh
+-rwxr--r-- 1 theia users 124 Sep  7 04:35 greet.sh
+theia@theia-schae016:/home/project$ ./greet.sh
+Enter your name:Hanh
+Welcome Hanh
+My first scriptUsing Bash is fun
+theia@theia-schae016:/home/project$ chmod u+x greetnew.sh
+theia@theia-schae016:/home/project$ ./greetnew.sh
+Enter first name: Hanh
+Enter last name: Nguye
+Hello Hanh Nguye
