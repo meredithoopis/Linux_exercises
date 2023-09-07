@@ -1,0 +1,734 @@
+theia@theia-schae016:~$ cd ~
+theia@theia-schae016:~$ ls
+docker-compose         lib           README.md
+dsdriver               node_modules  skills-network-extension-v0.1.0.tgz
+entrypoint.sh          package.json  src-gen
+gen-webpack.config.js  plugins       webpack.config.js
+javasharedresources    postgres      yarn.lock
+theia@theia-schae016:~$ cat entrypoint.sh
+#!/bin/bash
+
+if [ -f "$IBMCLOUD_API_KEY_LOCATION" ]; then
+  export IBMCLOUD_API_KEY=$(cat $IBMCLOUD_API_KEY_LOCATION)
+fi
+
+if [[ ! -z ${IBMCLOUD_API_KEY+x} && "${PRELAUNCH_K8S}" == "true"  ]]; then
+  ibmcloud login -r us-south
+
+  echo "Waiting for ${DOCKER_CERT_PATH}/ca.pem"
+  timeout=5
+  until [ -f ${DOCKER_CERT_PATH}/ca.pem ]
+  do
+    if [ "$timeout" == 0 ]; then
+      echo "ERROR: Timeout while waiting for the file ${DOCKER_CERT_PATH}/ca.pem"
+      break
+    fi
+    sleep 2
+    echo "waiting..."
+    ((timeout--))
+  done
+
+  if [ "$timeout" != 0 ]; then
+    echo "${DOCKER_CERT_PATH}/ca.pem found"
+    ibmcloud cr login
+  fi
+
+  # Set SN_ICR_NAMESPACE for the user
+  export SN_ICR_NAMESPACE=$(ibmcloud cr namespace-list | grep sn-labs- | xargs)
+
+  # This will upsert the "icr" secret
+  kubectl create secret docker-registry icr --docker-server=us.icr.io --docker-username=iamapikey --docker-password=$IBMCLOUD_API_KEY -o yaml --save-config --dry-run=client | kubectl apply -f -
+
+  # Set the SN context
+  export SN_KUBECTL_CONTEXT=$(kubectl config current-context)
+
+  if [ -z ${SN_ICR_NAMESPACE+x} ]; then
+    echo "ERROR: SN_ICR_NAMESPACE not set"
+    exit 1
+  fi
+fi
+
+if [ ! -z ${DHT+x} ]; then
+  DHT_DECODED=$(echo $DHT | base64 -d)
+  DHT_PARTS=(${DHT_DECODED//:/ })
+
+  docker login -u ${DHT_PARTS[0]} -p ${DHT_PARTS[1]}
+  kubectl create secret docker-registry dh --docker-server=index.docker.io/v2 --docker-username=${DHT_PARTS[0]} --docker-password=${DHT_PARTS[1]}
+fi
+
+chmod go-r /etc/kube/config
+
+export MONGO_PASSWORD="$(echo "$RANDOM-$USERNAME-$RANDOM" | base64 | cut -c1-16)"
+export CASSANDRA_PASSWORD="$(echo "$RANDOM-$USERNAME-$RANDOM" | base64 | cut -c1-16)"
+export MYSQL_PASSWORD="$(echo "$RANDOM-$USERNAME-$RANDOM" | base64 | cut -c1-16)"
+export POSTGRES_PASSWORD="$(echo "$RANDOM-$USERNAME-$RANDOM" | base64 | cut -c1-16)"
+export PGPASSWORD="$POSTGRES_PASSWORD"
+export AIRFLOW_PASSWORD="$(echo "$RANDOM-$USERNAME-$RANDOM" | base64 | cut -c1-16)"
+export _AIRFLOW_WWW_USER_PASSWORD="$AIRFLOW_PASSWORD"
+
+export PATH=$PATH:/home/theia/.local/bin
+
+sudo service cron start
+
+yarn theia start /home/project --hostname=0.0.0.0 --port=$THEIA_LOCAL_PORT
+theia@theia-schae016:~$ more entrypoint.sh
+#!/bin/bash
+
+if [ -f "$IBMCLOUD_API_KEY_LOCATION" ]; then
+  export IBMCLOUD_API_KEY=$(cat $IBMCLOUD_API_KEY_LOCATION)
+fi
+
+if [[ ! -z ${IBMCLOUD_API_KEY+x} && "${PRELAUNCH_K8S}" == "true"  ]]; then
+  ibmcloud login -r us-south
+theia@theia-schae016:~$ 
+theia@theia-schae016:~$ cd /home/project
+theia@theia-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Bash%20Scripting/usdoi.txt
+--2023-09-07 03:16:24--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Bash%20Scripting/usdoi.txt
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 8121 (7.9K) [text/plain]
+Saving to: ‘usdoi.txt’
+
+usdoi.txt           100%[================>]   7.93K  --.-KB/s    in 0s      
+
+2023-09-07 03:16:24 (864 MB/s) - ‘usdoi.txt’ saved [8121/8121]
+
+theia@theia-schae016:/home/project$ ls
+usdoi.txt
+theia@theia-schae016:/home/project$ head usdoi.txt
+The unanimous Declaration of the thirteen united States of America, When in the
+Course of human events, it becomes necessary for one people to dissolve the
+political bands which have connected them with another, and to assume among the
+powers of the earth, the separate and equal station to which the Laws of Nature
+and of Nature's God entitle them, a decent respect to the opinions of mankind
+requires that they should declare the causes which impel them to the
+separation.
+
+We hold these truths to be self-evident, that all men are created equal, that
+they are endowed by their Creator with certain unalienable Rights, that among
+theia@theia-schae016:/home/project$ head -3 usdoi.txt
+The unanimous Declaration of the thirteen united States of America, When in the
+Course of human events, it becomes necessary for one people to dissolve the
+political bands which have connected them with another, and to assume among the
+theia@theia-schae016:/home/project$ tail usdoi.txt
+People of these Colonies, solemnly publish and declare, That these United
+Colonies are, and of Right ought to be Free and Independent States; that they
+are Absolved from all Allegiance to the British Crown, and that all political
+connection between them and the State of Great Britain, is and ought to be
+totally dissolved; and that as Free and Independent States, they have full
+Power to levy War, conclude Peace, contract Alliances, establish Commerce, and
+to do all other Acts and Things which Independent States may of right do. And
+for the support of this Declaration, with a firm reliance on the protection of
+divine Providence, we mutually pledge to each other our Lives, our Fortunes and
+our sacred Honor.
+theia@theia-schae016:/home/project$ tail -2 usdoi.txt
+divine Providence, we mutually pledge to each other our Lives, our Fortunes and
+our sacred Honor.
+theia@theia-schae016:/home/project$ wc usdoi.txt
+ 152 1330 8121 usdoi.txt
+theia@theia-schae016:/home/project$ wc -l usdoi.txt
+152 usdoi.txt
+theia@theia-schae016:/home/project$ wc -w usdoi.txt
+1330 usdoi.txt
+theia@theia-schae016:/home/project$ wc -c usdoi.txt
+8121 usdoi.txt
+theia@theia-schae016:/home/project$ sort usdoi.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+abolishing the forms to which they are accustomed. But when a long train of
+absolute rule into these Colonies:
+abuses and usurpations, pursuing invariably the same Object evinces a design to
+and correspondence. They too have been deaf to the voice of justice and of
+and magnanimity, and we have conjured them by the ties of our common kindred to
+and of Nature's God entitle them, a decent respect to the opinions of mankind
+and organizing its powers in such form, as to them shall seem most likely to
+Appropriations of Lands.
+are Absolved from all Allegiance to the British Crown, and that all political
+Arms against their Country, to become the executioners of their friends and
+as to render it at once an example and fit instrument for introducing the same
+Brethren, or to fall themselves by their Hands.
+causes; and accordingly all experience hath shewn, that mankind are more
+Colonies are, and of Right ought to be Free and Independent States; that they
+conditions.
+Congress, Assembled, appealing to the Supreme Judge of the world for the
+connection between them and the State of Great Britain, is and ought to be
+consanguinity. We must, therefore, acquiesce in the necessity, which denounces
+constitution, and unacknowledged by our laws; giving his Assent to their Acts
+Course of human events, it becomes necessary for one people to dissolve the
+Cruelty & perfidy scarcely paralleled in the most barbarous ages, and totally
+destructive of these ends, it is the Right of the People to alter or to abolish
+disavow these usurpations, which, would inevitably interrupt our connections
+disposed to suffer, while evils are sufferable, than to right themselves by
+distant from the depository of their public Records, for the sole purpose of
+divine Providence, we mutually pledge to each other our Lives, our Fortunes and
+effect their Safety and Happiness. Prudence, indeed, will dictate that
+elected; whereby the Legislative powers, incapable of Annihilation, have
+establishing therein an Arbitrary government, and enlarging its Boundaries so
+establishment of an absolute Tyranny over these States. To prove this, let
+Facts be submitted to a candid world.
+fatiguing them into compliance with his measures.
+firmness his invasions on the rights of the people.
+For abolishing the free System of English Laws in a neighbouring Province,
+For cutting off our Trade with all parts of the world:
+For depriving us in many cases, of the benefits of Trial by Jury:
+for establishing Judiciary powers.
+For imposing Taxes on us without our Consent:
+For protecting them, by a mock Trial, from punishment for any Murders which
+For Quartering large bodies of armed troops among us:
+For suspending our own Legislatures, and declaring themselves invested with
+For taking away our Charters, abolishing our most valuable Laws, and altering
+for the support of this Declaration, with a firm reliance on the protection of
+For transporting us beyond Seas to be tried for pretended offences
+fundamentally the Forms of our Governments:
+Governments long established should not be changed for light and transient
+Government. The history of the present King of Great Britain is a history of
+He has abdicated Government here, by declaring us out of his Protection and
+He has affected to render the Military independent of and superior to the Civil
+He has called together legislative bodies at places unusual, uncomfortable, and
+He has combined with others to subject us to a jurisdiction foreign to our
+He has constrained our fellow Citizens taken Captive on the high Seas to bear
+He has dissolved Representative Houses repeatedly, for opposing with manly
+He has endeavoured to prevent the population of these States; for that purpose
+He has erected a multitude of New Offices, and sent hither swarms of Officers
+He has excited domestic insurrections amongst us, and has endeavoured to bring
+He has forbidden his Governors to pass Laws of immediate and pressing
+He has kept among us, in times of peace, Standing Armies without the Consent of
+He has made Judges dependent on his Will alone, for the tenure of their
+He has obstructed the Administration of Justice, by refusing his Assent to Laws
+He has plundered our seas, ravaged our Coasts, burnt our towns, and destroyed
+He has refused for a long time, after such dissolutions, to cause others to be
+He has refused his Assent to Laws, the most wholesome and necessary for the
+He has refused to pass other Laws for the accommodation of large districts of
+He is at this time transporting large Armies of foreign Mercenaries to compleat
+humble terms: Our repeated Petitions have been answered only by repeated
+importance, unless suspended in their operation till his Assent should be
+In every stage of these Oppressions We have Petitioned for Redress in the most
+injury. A Prince whose character is thus marked by every act which may define a
+in Peace Friends.
+it, and to institute new Government, laying its foundation on such principles
+Legislature, a right inestimable to them and formidable to tyrants only.
+mean time exposed to all the dangers of invasion from without, and convulsions
+Nor have We been wanting in attentions to our Brittish brethren. We have warned
+now the necessity which constrains them to alter their former Systems of
+obstructing the Laws for Naturalization of Foreigners; refusing to pass others
+obtained; and when so suspended, he has utterly neglected to attend to them.
+offices, and the amount and payment of their salaries.
+of our emigration and settlement here. We have appealed to their native justice
+of pretended Legislation:
+on the inhabitants of our frontiers, the merciless Indian Savages, whose known
+our legislatures.
+our sacred Honor.
+our Separation, and hold them, as we hold the rest of mankind, Enemies in War,
+People of these Colonies, solemnly publish and declare, That these United
+people, unless those people would relinquish the right of Representation in the
+political bands which have connected them with another, and to assume among the
+power.
+powers of the earth, the separate and equal station to which the Laws of Nature
+power to legislate for us in all cases whatsoever.
+Power to levy War, conclude Peace, contract Alliances, establish Commerce, and
+public good.
+rectitude of our intentions, do, in the Name, and by Authority of the good
+reduce them under absolute Despotism, it is their right, it is their duty, to
+repeated injuries and usurpations, all having in direct object the
+requires that they should declare the causes which impel them to the
+returned to the People at large for their exercise; the State remaining in the
+rights, Governments are instituted among Men, deriving their just powers from
+rule of warfare, is an undistinguished destruction of all ages, sexes and
+security.--Such has been the patient sufferance of these Colonies; and such is
+separation.
+the consent of the governed, --That whenever any Form of Government becomes
+the lives of our people.
+them from time to time of attempts by their legislature to extend an
+these are Life, Liberty and the pursuit of Happiness.--That to secure these
+The unanimous Declaration of the thirteen united States of America, When in the
+the works of death, desolation and tyranny, already begun with circumstances of
+they are endowed by their Creator with certain unalienable Rights, that among
+they should commit on the Inhabitants of these States:
+throw off such Government, and to provide new Guards for their future
+to do all other Acts and Things which Independent States may of right do. And
+to encourage their migrations hither, and raising the conditions of new
+to harrass our people, and eat out their substance.
+totally dissolved; and that as Free and Independent States, they have full
+Tyrant, is unfit to be the ruler of a free people.
+unwarrantable jurisdiction over us. We have reminded them of the circumstances
+unworthy the Head of a civilized nation.
+waging War against us.
+We hold these truths to be self-evident, that all men are created equal, that
+We, therefore, the Representatives of the united States of America, in General
+within.
+theia@theia-schae016:/home/project$ sort -r usdoi.txt
+within.
+We, therefore, the Representatives of the united States of America, in General
+We hold these truths to be self-evident, that all men are created equal, that
+waging War against us.
+unworthy the Head of a civilized nation.
+unwarrantable jurisdiction over us. We have reminded them of the circumstances
+Tyrant, is unfit to be the ruler of a free people.
+totally dissolved; and that as Free and Independent States, they have full
+to harrass our people, and eat out their substance.
+to encourage their migrations hither, and raising the conditions of new
+to do all other Acts and Things which Independent States may of right do. And
+throw off such Government, and to provide new Guards for their future
+they should commit on the Inhabitants of these States:
+they are endowed by their Creator with certain unalienable Rights, that among
+the works of death, desolation and tyranny, already begun with circumstances of
+The unanimous Declaration of the thirteen united States of America, When in the
+these are Life, Liberty and the pursuit of Happiness.--That to secure these
+them from time to time of attempts by their legislature to extend an
+the lives of our people.
+the consent of the governed, --That whenever any Form of Government becomes
+separation.
+security.--Such has been the patient sufferance of these Colonies; and such is
+rule of warfare, is an undistinguished destruction of all ages, sexes and
+rights, Governments are instituted among Men, deriving their just powers from
+returned to the People at large for their exercise; the State remaining in the
+requires that they should declare the causes which impel them to the
+repeated injuries and usurpations, all having in direct object the
+reduce them under absolute Despotism, it is their right, it is their duty, to
+rectitude of our intentions, do, in the Name, and by Authority of the good
+public good.
+Power to levy War, conclude Peace, contract Alliances, establish Commerce, and
+power to legislate for us in all cases whatsoever.
+powers of the earth, the separate and equal station to which the Laws of Nature
+power.
+political bands which have connected them with another, and to assume among the
+people, unless those people would relinquish the right of Representation in the
+People of these Colonies, solemnly publish and declare, That these United
+our Separation, and hold them, as we hold the rest of mankind, Enemies in War,
+our sacred Honor.
+our legislatures.
+on the inhabitants of our frontiers, the merciless Indian Savages, whose known
+of pretended Legislation:
+of our emigration and settlement here. We have appealed to their native justice
+offices, and the amount and payment of their salaries.
+obtained; and when so suspended, he has utterly neglected to attend to them.
+obstructing the Laws for Naturalization of Foreigners; refusing to pass others
+now the necessity which constrains them to alter their former Systems of
+Nor have We been wanting in attentions to our Brittish brethren. We have warned
+mean time exposed to all the dangers of invasion from without, and convulsions
+Legislature, a right inestimable to them and formidable to tyrants only.
+it, and to institute new Government, laying its foundation on such principles
+in Peace Friends.
+injury. A Prince whose character is thus marked by every act which may define a
+In every stage of these Oppressions We have Petitioned for Redress in the most
+importance, unless suspended in their operation till his Assent should be
+humble terms: Our repeated Petitions have been answered only by repeated
+He is at this time transporting large Armies of foreign Mercenaries to compleat
+He has refused to pass other Laws for the accommodation of large districts of
+He has refused his Assent to Laws, the most wholesome and necessary for the
+He has refused for a long time, after such dissolutions, to cause others to be
+He has plundered our seas, ravaged our Coasts, burnt our towns, and destroyed
+He has obstructed the Administration of Justice, by refusing his Assent to Laws
+He has made Judges dependent on his Will alone, for the tenure of their
+He has kept among us, in times of peace, Standing Armies without the Consent of
+He has forbidden his Governors to pass Laws of immediate and pressing
+He has excited domestic insurrections amongst us, and has endeavoured to bring
+He has erected a multitude of New Offices, and sent hither swarms of Officers
+He has endeavoured to prevent the population of these States; for that purpose
+He has dissolved Representative Houses repeatedly, for opposing with manly
+He has constrained our fellow Citizens taken Captive on the high Seas to bear
+He has combined with others to subject us to a jurisdiction foreign to our
+He has called together legislative bodies at places unusual, uncomfortable, and
+He has affected to render the Military independent of and superior to the Civil
+He has abdicated Government here, by declaring us out of his Protection and
+Government. The history of the present King of Great Britain is a history of
+Governments long established should not be changed for light and transient
+fundamentally the Forms of our Governments:
+For transporting us beyond Seas to be tried for pretended offences
+for the support of this Declaration, with a firm reliance on the protection of
+For taking away our Charters, abolishing our most valuable Laws, and altering
+For suspending our own Legislatures, and declaring themselves invested with
+For Quartering large bodies of armed troops among us:
+For protecting them, by a mock Trial, from punishment for any Murders which
+For imposing Taxes on us without our Consent:
+for establishing Judiciary powers.
+For depriving us in many cases, of the benefits of Trial by Jury:
+For cutting off our Trade with all parts of the world:
+For abolishing the free System of English Laws in a neighbouring Province,
+firmness his invasions on the rights of the people.
+fatiguing them into compliance with his measures.
+Facts be submitted to a candid world.
+establishment of an absolute Tyranny over these States. To prove this, let
+establishing therein an Arbitrary government, and enlarging its Boundaries so
+elected; whereby the Legislative powers, incapable of Annihilation, have
+effect their Safety and Happiness. Prudence, indeed, will dictate that
+divine Providence, we mutually pledge to each other our Lives, our Fortunes and
+distant from the depository of their public Records, for the sole purpose of
+disposed to suffer, while evils are sufferable, than to right themselves by
+disavow these usurpations, which, would inevitably interrupt our connections
+destructive of these ends, it is the Right of the People to alter or to abolish
+Cruelty & perfidy scarcely paralleled in the most barbarous ages, and totally
+Course of human events, it becomes necessary for one people to dissolve the
+constitution, and unacknowledged by our laws; giving his Assent to their Acts
+consanguinity. We must, therefore, acquiesce in the necessity, which denounces
+connection between them and the State of Great Britain, is and ought to be
+Congress, Assembled, appealing to the Supreme Judge of the world for the
+conditions.
+Colonies are, and of Right ought to be Free and Independent States; that they
+causes; and accordingly all experience hath shewn, that mankind are more
+Brethren, or to fall themselves by their Hands.
+as to render it at once an example and fit instrument for introducing the same
+Arms against their Country, to become the executioners of their friends and
+are Absolved from all Allegiance to the British Crown, and that all political
+Appropriations of Lands.
+and organizing its powers in such form, as to them shall seem most likely to
+and of Nature's God entitle them, a decent respect to the opinions of mankind
+and magnanimity, and we have conjured them by the ties of our common kindred to
+and correspondence. They too have been deaf to the voice of justice and of
+abuses and usurpations, pursuing invariably the same Object evinces a design to
+absolute rule into these Colonies:
+abolishing the forms to which they are accustomed. But when a long train of
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+theia@theia-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/module%201/zoo.txt
+--2023-09-07 03:21:52--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/module%201/zoo.txt
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 54 [text/plain]
+Saving to: ‘zoo.txt’
+
+zoo.txt             100%[================>]      54  --.-KB/s    in 0s      
+
+2023-09-07 03:21:52 (7.95 MB/s) - ‘zoo.txt’ saved [54/54]
+
+theia@theia-schae016:/home/project$ cat zoo.txt
+zebra
+zebra
+lion
+lion
+anaconda
+zebra
+zebra
+lion
+zebra
+theia@theia-schae016:/home/project$ uniq zoo.txt
+zebra
+lion
+anaconda
+zebra
+lion
+zebra
+theia@theia-schae016:/home/project$ grep people usdoi.txt
+Course of human events, it becomes necessary for one people to dissolve the
+people, unless those people would relinquish the right of Representation in the
+firmness his invasions on the rights of the people.
+to harrass our people, and eat out their substance.
+the lives of our people.
+Tyrant, is unfit to be the ruler of a free people.
+theia@theia-schae016:/home/project$ grep -v login /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+sync:x:4:65534:sync:/bin:/bin/sync
+theia:x:1000:1000:,,,:/home/theia:/bin/bash
+postgres:x:105:109:PostgreSQL administrator,,,:/var/lib/postgresql:/bin/bash
+theia@theia-schae016:/home/project$ cut -c -2 zoo.txt
+ze
+ze
+li
+li
+an
+ze
+ze
+li
+ze
+theia@theia-schae016:/home/project$ cut -c 2- zoo.txt
+ebra
+ebra
+ion
+ion
+naconda
+ebra
+ebra
+ion
+ebra
+theia@theia-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/v4_new_content/labs/names_and_numbers.csv
+--2023-09-07 03:26:56--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/v4_new_content/labs/names_and_numbers.csv
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 42 [text/csv]
+Saving to: ‘names_and_numbers.csv’
+
+names_and_numbers.c 100%[================>]      42  --.-KB/s    in 0s      
+
+2023-09-07 03:26:56 (6.42 MB/s) - ‘names_and_numbers.csv’ saved [42/42]
+
+theia@theia-schae016:/home/project$ cat names_and_numbers.csv
+John Fogerty, 555-1212
+Jane Doe, 555-1312
+theia@theia-schae016:/home/project$ cut -d "," -f2 names_and_numbers.csv
+ 555-1212
+ 555-1312
+theia@theia-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/module%201/zoo_ages.txt
+--2023-09-07 03:27:42--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/module%201/zoo_ages.txt
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 20 [text/plain]
+Saving to: ‘zoo_ages.txt’
+
+zoo_ages.txt        100%[================>]      20  --.-KB/s    in 0s      
+
+2023-09-07 03:27:42 (3.76 MB/s) - ‘zoo_ages.txt’ saved [20/20]
+
+theia@theia-schae016:/home/project$ past zoo.txt zoo_ages.txt
+bash: past: command not found
+theia@theia-schae016:/home/project$ paste -d "," zoo.txt zoo_ages.txt
+zebra,17
+zebra,12
+lion,7
+lion,4
+anaconda,3
+zebra,4
+zebra,1
+lion,0
+zebra,1
+theia@theia-schae016:/home/project$ cd ~
+theia@theia-schae016:~$ pwd
+/home/theia
+theia@theia-schae016:~$ wc -l /etc/passwd
+25 /etc/passwd
+theia@theia-schae016:~$ grep "not installed" /var/log/bootstrap.log
+  Package libc6 is not installed.
+  Package libdebconfclient0 is not installed.
+  awk is not installed.
+  Package awk is not installed.
+  libbz2-1.0 is not installed.
+  libc6 is not installed.
+  liblzma5 is not installed.
+  libselinux1 is not installed.
+  libzstd1 is not installed.
+  zlib1g is not installed.
+  Package libbz2-1.0 is not installed.
+  Package libc6 is not installed.
+  Package liblzma5 is not installed.
+  Package libselinux1 is not installed.
+  Package libzstd1 is not installed.
+  Package zlib1g is not installed.
+  Package tar is not installed.
+  Package libgcc1 is not installed.
+  libtinfo5 is not installed.
+  libsystemd0 is not installed.
+  libacl1 is not installed.
+  libattr1 is not installed.
+  libselinux1 is not installed.
+  libbz2-1.0 is not installed.
+  liblzma5 is not installed.
+  libselinux1 is not installed.
+  libzstd1 is not installed.
+  zlib1g is not installed.
+  libblkid1 is not installed.
+  libcom-err2 is not installed.
+  libext2fs2 is not installed.
+  libss2 is not installed.
+  libuuid1 is not installed.
+  libselinux1 is not installed.
+  libpcre3 is not installed.
+  libpam0g is not installed.
+  libselinux1 is not installed.
+  libpam-modules-bin is not installed.
+  zlib1g is not installed.
+theia@theia-schae016:~$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Bash%20Scripting/top-sites.txt
+--2023-09-07 03:30:02--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Bash%20Scripting/top-sites.txt
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1311 (1.3K) [text/plain]
+Saving to: ‘top-sites.txt’
+
+top-sites.txt       100%[================>]   1.28K  --.-KB/s    in 0s      
+
+2023-09-07 03:30:02 (174 MB/s) - ‘top-sites.txt’ saved [1311/1311]
+
+theia@theia-schae016:~$ grep org top-sites.txt 
+en.wikipedia.org
+wordpress.org
+mozilla.org
+pt.wikipedia.org
+es.wikipedia.org
+w3.org
+wikimedia.org
+creativecommons.org
+fr.wikipedia.org
+apache.org
+id.wikipedia.org
+de.wikipedia.org
+theia@theia-schae016:~$ head -n 7 top-sites.txt
+youtube.com
+www.google.com
+apple.com
+microsoft.com
+cloudflare.com
+play.google.com
+support.google.com
+theia@theia-schae016:~$ tail -n 7 top-sites.txt
+id.wikipedia.org
+rakuten.co.jp
+tinyurl.com
+amazon.co.jp
+de.wikipedia.org
+tools.google.com
+buydomains.comtheia@theia-schae016:~$ cut -c -3 top-sites.txt
+you
+www
+app
+mic
+clo
+pla
+sup
+www
+en.
+doc
+wor
+moz
+lin
+you
+map
+ado
+dri
+eur
+goo
+plu
+vim
+sit
+acc
+pt.
+git
+fac
+uol
+vk.
+ist
+es.
+ama
+bp.
+bbc
+cnn
+fee
+nih
+goo
+wha
+jim
+goo
+w3.
+iss
+pol
+wik
+liv
+cre
+sli
+mai
+get
+bra
+glo
+t.m
+new
+bbc
+dro
+mys
+reu
+www
+med
+goo
+msn
+fr.
+ope
+mai
+the
+www
+gst
+goo
+pay
+dai
+nyt
+hug
+abr
+for
+dev
+imd
+lin
+boo
+twi
+who
+apa
+wik
+dra
+ok.
+wir
+ama
+blo
+pho
+wa.
+lat
+ali
+ste
+bit
+id.
+rak
+tin
+ama
+de.
+too
+buy
+theia@theia-schae016:~$ cd /home/project
+theia@theia-schae016:/home/project$ cut -d "," -f 1 names_and_numbers.csv
+John Fogerty
+Jane Doe
