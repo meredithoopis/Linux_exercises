@@ -1,0 +1,58 @@
+theia@theia-schae016:/home/project$ echo '#!/bin/bash' > conditional_script.sh
+theia@theia-schae016:/home/project$ chmod u+x conditional_script.sh
+theia@theia-schae016:/home/project$ echo 'Are u enjoying this course?' 
+Are u enjoying this course?
+theia@theia-schae016:/home/project$ echo -n 'Enter yes or no '
+Enter yes or no theia@theia-schae016:/home/project$ read response
+yes
+theia@theia-schae016:/home/project$ ls -l script.sh
+-rw-r--r-- 1 theia users 632 Sep  7 05:08 script.sh
+theia@theia-schae016:/home/project$ chmod u+x script.sh
+theia@theia-schae016:/home/project$ bash ./script.sh
+Are you enjoying this course so far?
+Enter "y" for yes, "n" for no
+Your response must be either 'y' or 'n'.
+Please re-run the script to try again.
+theia@theia-schae016:/home/project$ chmod u+x hi.sh
+theia@theia-schae016:/home/project$ bash ./hi.sh
+Enter an integer: 12
+Enter another integer: 2
+The sum of 12 and 2 is 14
+The product of 12 and 2 is 24.
+The sum is less than the product.
+theia@theia-schae016:/home/project$ csv_file = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/M3/L2/arrays_table.csv"
+bash: csv_file: command not found
+theia@theia-schae016:/home/project$ wget $csv_file
+wget: missing URL
+Usage: wget [OPTION]... [URL]...
+
+Try `wget --help' for more options.
+theia@theia-schae016:/home/project$ csv_file="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/M3/L2/arrays_table.csv"
+theia@theia-schae016:/home/project$ wget $csv_file
+--2023-09-07 05:14:33--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/M3/L2/arrays_table.csv
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 54 [text/csv]
+Saving to: ‘arrays_table.csv’
+
+arrays_table.csv    100%[================>]      54  --.-KB/s    in 0s      
+
+2023-09-07 05:14:34 (5.85 MB/s) - ‘arrays_table.csv’ saved [54/54]
+
+theia@theia-schae016:/home/project$ cat arrays_table.csv
+column_0,column_1,column_2
+1,2,3
+4,5,6
+7,8,9
+10,11,12
+theia@theia-schae016:/home/project$ chmod u+x Bash.sh
+theia@theia-schae016:/home/project$ bash ./Bash.sh
+./Bash.sh: line 2: csv_file: command not found
+./Bash.sh: line 5: syntax error near unexpected token `('
+./Bash.sh: line 5: `col0 = ($(cut -d "," -f 1 $csv_file))'
+theia@theia-schae016:/home/project$ bash ./Bash.sh
+Displaying the first column:
+column_0 1 4 7 10
+There are 5 lines in the file
+column_3 1 1 1 1
