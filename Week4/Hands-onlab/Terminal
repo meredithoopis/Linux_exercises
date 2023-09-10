@@ -1,0 +1,62 @@
+theia@theia-schae016:/home/project$ touch rx_poc.log
+theia@theia-schae016:/home/project$ header=$(echo -e "year\tmonth\tday\tobs_tmp\tfc_temp")
+theia@theia-schae016:/home/project$ echo $header>rx_poc.log
+theia@theia-schae016:/home/project$ chmod u+x rx_poc.sh
+theia@theia-schae016:/home/project$ today=$(date +%Y%m%d)
+theia@theia-schae016:/home/project$ weather_report=raw_data_$today
+theia@theia-schae016:/home/project$ city=Casablanca
+theia@theia-schae016:/home/project$ curl wttr.in/$city --output $weather_report
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:-100  9174  100  9174    0     0  14135      0 --:--:-- --:--:-- --:--:-- 14113
+theia@theia-schae016:/home/project$ grep °C $weather_report > temperatures.txt
+theia@theia-schae016:/home/project$ obs_tmp=$(cat -A temperatures.txt | head -1 | cut -d "+" -f2 | cut -d "^" -f1)
+theia@theia-schae016:/home/project$ echo "Observed temperature = $obs_tmp"
+Observed temperature = 26
+theia@theia-schae016:/home/project$ fc_temp=$(cat -A temperatures.txt | head -3 | tail -1 | cut -d "+" -f2 | cut -d "(" -f1 | cut -d "^" -f1 )
+theia@theia-schae016:/home/project$ hour=$(TZ='Morocco/Casablanca' date -u +%H) 
+theia@theia-schae016:/home/project$ day=$(TZ='Morocco/Casablanca' date -u +%d) 
+theia@theia-schae016:/home/project$ month=$(TZ='Morocco/Casablanca' date +%m)
+theia@theia-schae016:/home/project$ year=$(TZ='Morocco/Casablanca' date +%Y)
+theia@theia-schae016:/home/project$ record=$(echo -e "$year\t$month\t$day\t$obs_tmp\t$fc_temp")
+theia@theia-schae016:/home/project$ echo $record>>rx_poc.log
+theia@theia-schae016:/home/project$ date
+Sun Sep 10 12:13:54 EDT 2023
+theia@theia-schae016:/home/project$ date -u
+Sun Sep 10 16:14:00 UTC 2023
+theia@theia-schae016:/home/project$ crontab -e
+no crontab for theia - using an empty one
+crontab: installing new crontab
+theia@theia-schae016:/home/project$ echo -e "year\tmonth\tday\tobs_tmp\tfc_temp\taccuracy\taccuracy_range" > historical_fc_accuracy.tsv
+theia@theia-schae016:/home/project$ yesterday_fc=$(tail -2 rx_poc.log | head -1 | cut -d " " -f5)
+theia@theia-schae016:/home/project$ today_temp=$(tail -1 rx_poc.log | cut -d " " -f4)
+theia@theia-schae016:/home/project$ accuracy=$(($yesterday_fc-$today_temp))
+theia@theia-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMSkillsNetwork-LX0117EN-Coursera/labs/synthetic_historical_fc_accuracy.tsv
+--2023-09-10 12:17:40--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMSkillsNetwork-LX0117EN-Coursera/labs/synthetic_historical_fc_accuracy.tsv
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 263 [text/tab-separated-values]
+Saving to: ‘synthetic_historical_fc_accuracy.tsv’
+
+synthetic_histor 100%[==========>]     263  --.-KB/s    in 0s      
+
+2023-09-10 12:17:40 (38.5 MB/s) - ‘synthetic_historical_fc_accuracy.tsv’ saved [263/263]
+
+theia@theia-schae016:/home/project$ bash weekly_stats.sh
+-5
+-1
+-2
+4
+-2
+0
+1
+-5
+-1
+-2
+4
+-2
+0
+1
+minimum ebsolute error = 0
+maximum absolute error = -5
