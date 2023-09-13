@@ -1,0 +1,50 @@
+theia@theiadocker-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/Final%20Project/backup.sh
+--2023-09-13 11:04:14--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/Final%20Project/backup.sh
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1071 (1.0K) [text/x-sh]
+Saving to: ‘backup.sh’
+
+backup.sh           100%[================>]   1.05K  --.-KB/s    in 0s      
+
+2023-09-13 11:04:14 (126 MB/s) - ‘backup.sh’ saved [1071/1071]
+
+theia@theiadocker-schae016:/home/project$ date
+Wed Sep 13 11:07:56 EDT 2023
+theia@theiadocker-schae016:/home/project$ chmod u+x backup.sh
+theia@theiadocker-schae016:/home/project$ ls -l backup,sh
+ls: cannot access 'backup,sh': No such file or directory
+theia@theiadocker-schae016:/home/project$ ls -l backup.sh
+-rwxr--r-- 1 theia users 1330 Sep 13 11:19 backup.sh
+theia@theiadocker-schae016:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/Final%20Project/important-documents.zip
+--2023-09-13 11:20:18--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/Final%20Project/important-documents.zip
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4995 (4.9K) [application/zip]
+Saving to: ‘important-documents.zip’
+
+important-documents 100%[================>]   4.88K  --.-KB/s    in 0s      
+
+2023-09-13 11:20:18 (783 MB/s) - ‘important-documents.zip’ saved [4995/4995]
+
+theia@theiadocker-schae016:/home/project$ unzip -DDo important-documents.zip
+Archive:  important-documents.zip
+   creating: important-documents/
+  inflating: important-documents/zop.txt  
+  inflating: important-documents/ana.txt  
+  inflating: important-documents/doi.txt  
+theia@theiadocker-schae016:/home/project$ touch important-documents/*
+theia@theiadocker-schae016:/home/project$ ./backup.sh important-documents .
+important-documents
+.
+ana.txt
+doi.txt
+zop.txt
+theia@theiadocker-schae016:/home/project$ ls -l
+total 24
+-rw-r--r-- 1 theia users 4423 Sep 13 11:20 backup-currentTS.tar.gz
+-rwxr--r-- 1 theia users 1330 Sep 13 11:19 backup.sh
+drwxr-sr-x 2 theia users 4096 Sep 13 11:20 important-documents
+-rw-r--r-- 1 theia users 4995 Sep 28  2022 important-documents.zip
